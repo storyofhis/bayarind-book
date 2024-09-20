@@ -43,7 +43,7 @@ func (svc *bookSvc) CreateBook(ctx context.Context, book *params.CreateBook, id 
 
 // DeleteBook implements service.BookSvc.
 func (svc *bookSvc) DeleteBook(ctx context.Context, id uuid.UUID) *views.Response {
-	book, err := svc.repo.GetBookById(ctx, id)
+	_, err := svc.repo.GetBookById(ctx, id)
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return views.ErrorReponse(http.StatusBadRequest, views.M_BAD_REQUEST, err)
@@ -56,9 +56,7 @@ func (svc *bookSvc) DeleteBook(ctx context.Context, id uuid.UUID) *views.Respons
 		return views.ErrorReponse(http.StatusInternalServerError, views.M_INTERNAL_SERVER_ERROR, err)
 	}
 
-	return views.SuccessResponse(http.StatusNoContent, views.M_AUTHOR_SUCCESSFULLY_DELETED, views.Book{
-		UserId: book.UserId,
-	})
+	return views.SuccessResponse(http.StatusNoContent, views.M_AUTHOR_SUCCESSFULLY_DELETED, nil)
 }
 
 // GetAuthorById implements service.BookSvc.

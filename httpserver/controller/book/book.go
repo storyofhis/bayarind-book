@@ -1,4 +1,4 @@
-package controller
+package book_controller
 
 import (
 	"fmt"
@@ -173,5 +173,4 @@ func (control *BookController) DeleteBook(ctx *gin.Context) {
 
 	response := control.svc.DeleteBook(ctx, bookId)
 	views.WriteJsonResponse(ctx, response)
-
 }

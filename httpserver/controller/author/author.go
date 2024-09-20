@@ -1,4 +1,4 @@
-package controller
+package author_controller
 
 import (
 	"net/http"

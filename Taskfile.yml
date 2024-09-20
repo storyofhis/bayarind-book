@@ -1,0 +1,47 @@
+version: "3"
+
+tasks:
+  default:
+    cmds:
+      - task -l
+
+  build-cmd:
+    desc: Build commands inside cmd directory
+    cmds:
+      - go build -o ./.build/bayarind-book cmd/main.go
+
+  tools:
+    desc: Install tools
+    cmds:
+      - go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.56.2
+      - go install github.com/vektra/mockery/v2@v2.42.1
+
+  mockery:
+    desc: Generate mocks
+    cmds:
+      - mockery --all
+
+  lint:
+    desc: Run linter
+    cmds:
+      - golangci-lint run
+
+  test:unit:
+    desc: Run unit tests
+    cmds:
+      - go test ./...
+
+  coverage:
+    desc: Run coverage
+    cmds:
+      - bash ./scripts/coverage.sh
+
+  serve:
+    desc: Run server
+    cmds:
+      - go run cmd/main.go
+
+  compose:
+    desc: Run docker-compose locally
+    cmds:
+      - docker compose up
