@@ -9,10 +9,7 @@ import (
 
 type UserRepo interface {
 	CreateUser(ctx context.Context, user *models.User) error
-	GetUserById(ctx context.Context, id uuid.UUID) (*models.User, error)
 	GetUserByUsername(ctx context.Context, username string) (*models.User, error)
-	GetUsers(ctx context.Context, criteria map[string]interface{}) ([]*models.User, error)
-	UpdateUserById(ctx context.Context, id uuid.UUID) error
 }
 
 type BookRepo interface {

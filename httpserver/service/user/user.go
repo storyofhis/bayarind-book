@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"time"
 
@@ -25,13 +26,13 @@ type userSvc struct {
 func (svc *userSvc) Register(ctx context.Context, user *params.Register) *views.Response {
 	_, err := svc.repo.GetUserByUsername(ctx, user.Username)
 	if err == nil {
-		return views.ErrorReponse(http.StatusBadRequest, views.M_USERNAME_ALREADY_USED, err)
+		return views.ErrorReponse(http.StatusBadRequest, views.M_USERNAME_ALREADY_USED, errors.New(views.M_USERNAME_ALREADY_USED))
 	} else if err != nil && err != gorm.ErrRecordNotFound {
 		return views.ErrorReponse(http.StatusInternalServerError, views.M_INTERNAL_SERVER_ERROR, err)
 	}
 	hashed, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
 	if err != nil {
-		return views.ErrorReponse(http.StatusInternalServerError, views.M_INTERNAL_SERVER_ERROR, err)
+		return views.ErrorReponse(http.StatusInternalServerError, views.M_INTERNAL_SERVER_ERROR, errors.New(err.Error()))
 	}
 
 	input := models.User{

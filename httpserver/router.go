@@ -6,18 +6,20 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/storyofhis/books-management/common"
-	"github.com/storyofhis/books-management/httpserver/controller"
+	author_controller "github.com/storyofhis/books-management/httpserver/controller/author"
+	book_controller "github.com/storyofhis/books-management/httpserver/controller/book"
+	user_controller "github.com/storyofhis/books-management/httpserver/controller/user"
 )
 
 type router struct {
 	router *gin.Engine
 
-	user   *controller.UserController
-	author *controller.AuthorController
-	book   *controller.BookController
+	user   user_controller.UserController
+	author author_controller.AuthorController
+	book   book_controller.BookController
 }
 
-func NewRouter(r *gin.Engine, user *controller.UserController, author *controller.AuthorController, book *controller.BookController) *router {
+func NewRouter(r *gin.Engine, user user_controller.UserController, author author_controller.AuthorController, book book_controller.BookController) *router {
 	return &router{
 		router: r,
 		user:   user,
